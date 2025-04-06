@@ -11,9 +11,6 @@ import json
 import sounddevice as sd
 import speechbrain as sb
 
-# Set copy strategy properly
-from speechbrain.utils.data_utils import DownloadConfig
-DownloadConfig().set_default_download_strategy("copy")
 
 # Import TTS models from the correct place
 from speechbrain.inference import Tacotron2, HIFIGAN
