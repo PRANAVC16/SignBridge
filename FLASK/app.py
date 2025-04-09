@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, jsonify
+from flask import Flask, render_template, Response, jsonify # type: ignore
 import cv2
 import numpy as np
 import mediapipe as mp
