@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gesture Recognition UI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .video-container {
+      flex: 2;
+      text-align: center;
+    }
+
+    .video-container img {
+      border: 5px solid #4CAF50;
+      border-radius: 10px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .sidebar {
+      flex: 1;
+      margin-left: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    #gestureOutput {
+      font-size: 1.2rem;
+      color: #4CAF50;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    #history {
+      margin-top: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      background-color: #f9f9f9;
+      padding: 8px 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .toggle-container {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-container label {
+      font-weight: bold;
+    }
+
+    .toggle-container input {
+      transform: scale(1.5);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Real-Time Hand Gesture Recognition</h1>
+  </header>
+
+  <div class="container">
+    <div class="video-container">
+      <img id="videoFeed" src="{{ url_for('video_feed') }}" alt="Video Feed">
+      <p id="gestureOutput">Recognized Gesture: --</p>
+    </div>
+
+    <div class="sidebar">
+      <h2>Gesture History</h2>
+      <div id="history"></div>
+
+      <div class="toggle-container">
+        <label for="ttsToggle">Text-to-Speech</label>
+        <input type="checkbox" id="ttsToggle" checked>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const gestureOutput = document.getElementById("gestureOutput");
+    const historyContainer = document.getElementById("history");
+    const ttsToggle = document.getElementById("ttsToggle");
+
+    // Optional: You can fetch recognized gesture updates from server if you build a proper endpoint
+    // or send WebSocket updates. For now, this is placeholder client-side functionality.
+
+    // Example: Dummy update logic (replace this with real-time updates from your backend if needed)
+    let prevGesture = "--";
+    function simulateGestureUpdate(newGesture) {
+      if (newGesture !== prevGesture) {
+        gestureOutput.textContent = `Recognized Gesture: ${newGesture}`;
+        const newItem = document.createElement("div");
+        newItem.className = "history-item";
+        newItem.textContent = newGesture;
+        historyContainer.prepend(newItem);
+        prevGesture = newGesture;
+
+        // Optionally play TTS here using WebSocket or Fetch API to Flask
+        if (ttsToggle.checked) {
+          fetch(`/speak/${encodeURIComponent(newGesture)}`);
+        }
+      }
+    }
+
+    // This is just simulation — Replace with actual WebSocket or polling-based update from Flask
+    /*
+    setInterval(() => {
+      const gestures = ["Hello", "Thank You", "Yes", "No", "OK"];
+      const randomGesture = gestures[Math.floor(Math.random() * gestures.length)];
+      simulateGestureUpdate(randomGesture);
+    }, 5000);
+    */
+  </script>
+</body>
+</html>
