@@ -203,23 +203,41 @@ def speak(text):
     speech_thread.start()
 
 # -------------------- MAIN EXECUTION --------------------
-if __name__ == "__main__":
-    while True:
-        print("\nOptions:")
-        print("1. Train Gestures")
-        print("2. Recognize Gestures")
-        print("3. Exit")
-        choice = input("Enter choice: ")
+import tkinter as tk
+from tkinter import messagebox
 
-        if choice == "1":
-            train_mode()
-        elif choice == "2":
-            recognition_mode()
-        elif choice == "3":
-            break
-        else:
-            print("Invalid choice! Try again.")
+def start_train_mode():
+    train_mode()
 
+def start_recognition_mode():
+    recognition_mode()
+
+def on_exit():
     cap.release()
     cv2.destroyAllWindows()
+    root.destroy()
     print("Program exited successfully.")
+
+# Create main window
+root = tk.Tk()
+root.title("Sign Language Recognition")
+root.geometry("400x300")
+root.resizable(False, False)
+
+# Heading
+heading = tk.Label(root, text="Sign Language App", font=("Helvetica", 18, "bold"))
+heading.pack(pady=20)
+
+# Buttons
+train_button = tk.Button(root, text="Train Gestures", font=("Helvetica", 14), width=20, command=start_train_mode)
+train_button.pack(pady=10)
+
+recognize_button = tk.Button(root, text="Recognize Gestures", font=("Helvetica", 14), width=20, command=start_recognition_mode)
+recognize_button.pack(pady=10)
+
+exit_button = tk.Button(root, text="Exit", font=("Helvetica", 14), width=20, command=on_exit)
+exit_button.pack(pady=20)
+
+# Start the GUI event loop
+root.protocol("WM_DELETE_WINDOW", on_exit)
+root.mainloop()
