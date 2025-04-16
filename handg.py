@@ -129,6 +129,11 @@ def train_model(X, y):
 # -------------------- RECOGNITION MODE --------------------
 def recognition_mode():
     global model
+    if os.path.exists(model_filename):
+        model = tf.keras.models.load_model(model_filename)
+        load_labels()
+    else:
+        model = None
     if model is None:
         print("Error: Model not trained. Please train first.")
         return
