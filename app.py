@@ -4,7 +4,6 @@ Modern desktop dashboard featuring live landmark overlay, temporal smoothing,
 sentence accumulator, audio playback, and confidence analytics.
 """
 import os
-os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
 import sys

@@ -4,7 +4,6 @@ Captures spatial hand landmarks in real-time, saves labeled datasets,
 and trains an invariant Keras classifier with validation reporting.
 """
 import os
-os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
 import sys

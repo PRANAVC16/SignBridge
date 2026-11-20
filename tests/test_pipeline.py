@@ -30,9 +30,9 @@ class TestSentenceBuilder(unittest.TestCase):
         self.assertEqual(len(self.builder.get_words()), 0)
 
     def test_hold_and_commit(self):
-        # Hold "Hello" for 4 frames
+        # Hold "Hello" for enough frames to establish window majority and hold duration
         committed_word = None
-        for _ in range(4):
+        for _ in range(6):
             smoothed, hold_progress, newly_committed = self.builder.update("Hello", 0.95)
             if newly_committed:
                 committed_word = newly_committed
@@ -42,15 +42,18 @@ class TestSentenceBuilder(unittest.TestCase):
 
     def test_sentence_accumulation(self):
         # Commit "Hello"
-        for _ in range(4):
+        for _ in range(5):
             self.builder.update("Hello", 0.95)
+
+        # Hand drops between gestures
+        self.builder.update(None, 0.0)
 
         # Wait out cooldown
         import time
         time.sleep(0.15)
 
         # Commit "Morning"
-        for _ in range(4):
+        for _ in range(5):
             self.builder.update("Morning", 0.95)
 
         self.assertEqual(self.builder.get_words(), ["Hello", "Morning"])

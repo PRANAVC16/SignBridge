@@ -2,7 +2,6 @@
 Configuration settings for Indian Sign Language (ISL) Recognition & Translation System.
 """
 import os
-os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
 from pathlib import Path
