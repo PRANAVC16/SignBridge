@@ -94,7 +94,7 @@ A sign is committed to the sentence buffer only when $\hat{y}_t$ is held consist
 ## Repository Structure
 
 ```text
-PBL4/
+SignBridge/
 ├── app.py                     # Main application entry point (Modern GUI Dashboard)
 ├── train.py                   # Interactive dataset collector & neural model trainer
 ├── requirements.txt           # Production dependencies
@@ -135,8 +135,8 @@ PBL4/
 ### 2. Installation
 Clone the repository and install dependencies:
 ```bash
-git clone https://github.com/PRANAVC16/PBL4.git
-cd PBL4
+git clone https://github.com/PRANAVC16/SignBridge.git
+cd SignBridge
 
 # Create and activate virtual environment
 python -m venv .venv
