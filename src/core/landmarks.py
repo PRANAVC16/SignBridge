@@ -7,8 +7,20 @@ import numpy as np
 
 try:
     import mediapipe as mp
-    MP_AVAILABLE = True
-except ImportError:
+    try:
+        from mediapipe.python.solutions import hands as mp_hands
+        from mediapipe.python.solutions import drawing_utils as mp_draw
+        from mediapipe.python.solutions import drawing_styles as mp_drawing_styles
+    except (ImportError, AttributeError):
+        mp_hands = getattr(mp, "solutions", None).hands if hasattr(mp, "solutions") else None
+        mp_draw = getattr(mp, "solutions", None).drawing_utils if hasattr(mp, "solutions") else None
+        mp_drawing_styles = getattr(mp, "solutions", None).drawing_styles if hasattr(mp, "solutions") else None
+
+    MP_AVAILABLE = (mp_hands is not None)
+except Exception:
+    mp_hands = None
+    mp_draw = None
+    mp_drawing_styles = None
     MP_AVAILABLE = False
 
 
@@ -21,12 +33,16 @@ class LandmarkExtractor:
                  min_detection_confidence=0.7,
                  min_tracking_confidence=0.7):
         """Initialize MediaPipe Hands solution."""
-        if not MP_AVAILABLE:
-            raise ImportError("MediaPipe is not installed. Run 'pip install mediapipe'.")
+        if not MP_AVAILABLE or mp_hands is None:
+            raise ImportError(
+                "MediaPipe Solutions API not found in the installed version of mediapipe.\n"
+                "To fix this, run:\n"
+                "    pip install mediapipe==0.10.14\n"
+            )
 
-        self.mp_hands = mp.solutions.hands
-        self.mp_draw = mp.solutions.drawing_utils
-        self.mp_drawing_styles = mp.solutions.drawing_styles
+        self.mp_hands = mp_hands
+        self.mp_draw = mp_draw
+        self.mp_drawing_styles = mp_drawing_styles
 
         self.hands = self.mp_hands.Hands(
             static_image_mode=static_image_mode,
