@@ -2,6 +2,10 @@
 Hand landmark extraction and spatial normalization using MediaPipe Hands.
 Supports both single-hand and dual-hand tracking, with raw and invariant normalized coordinate modes.
 """
+import os
+os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "python"
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+
 import cv2
 import numpy as np
 
